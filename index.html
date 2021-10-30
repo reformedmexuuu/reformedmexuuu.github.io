@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+
+       <section>
+         <img src="bg.jpg" id="bg">
+         <img src="bats.png" id="bats">
+         <img src="castle.png" id="castle">
+         <img src="wolf.png" id="wolf">
+         <img src="img.png" id="img">
+
+
+
+       </section>
+      <div class="sec">
+         <div class="content">
+            <h2>Happy Halloween</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, sit sequi consequatur enim corrupti molestiae aliquam dolores eum, libero id provident quibusdam neque harum amet quam eius, numquam totam repellendus! Recusandae labore nostrum reprehenderit facilis, quae minus nulla repellat accusamus, quo cum dolor, aspernatur laboriosam neque explicabo repellendus error qui nemo ad molestiae accusantium eos. Quam beatae obcaecati eveniet quae accusantium laudantium quia aspernatur voluptatibus deserunt repellat aut maxime eaque, at nam, fugit expedita laboriosam modi nihil, ducimus repellendus doloremque! Dignissimos, quidem id earum amet sunt molestias quos, voluptatem debitis recusandae eius quia nisi ab, sint accusamus repudiandae harum corrupti! Molestiae, facilis fuga totam nesciunt provident sapiente quas accusamus. Sunt mollitia corporis facilis ad, debitis accusamus quas assumenda nesciunt totam a, aperiam libero enim! Dolore consequuntur ut minima porro quaerat molestiae cumque ducimus officiis ad sequi blanditiis aspernatur exercitationem aliquam id quas perspiciatis voluptatem, placeat labore esse odio at? Minima inventore eveniet similique aperiam impedit fuga nulla. Quia, iusto similique sed magnam ab sint eum odit temporibus hic culpa repudiandae, obcaecati numquam quae repellendus corrupti, eius assumenda praesentium totam tempora reiciendis. Nemo qui consequuntur accusamus nobis a ut modi, impedit asperiores necessitatibus aut corporis earum laborum sed animi, eaque error dignissimos minima consequatur cum est recusandae iste nostrum? Numquam delectus distinctio, iure totam deleniti minima, corporis harum adipisci explicabo temporibus accusamus sapiente eligendi at ducimus cum voluptates? Ut non exercitationem dolores enim provident cupiditate odit aspernatur illo voluptatem sit fuga aperiam eum, ab quibusdam sed officia assumenda eveniet rem. Similique esse, eum dolores ratione qui non culpa nisi voluptatem nostrum perferendis quas ut explicabo, enim a ex corporis. Nobis, fuga? Similique quisquam quis id ipsam officia placeat consectetur quas rem aut ipsa facere, illum corporis nulla totam, maxime, consequuntur expedita numquam aspernatur! Architecto, a in quasi laboriosam illum debitis amet.</p>
+         </div>
+
+
+      </div>
+
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollTrigger.min.js"></script>
+
+      <script>
+         gsap.to("#img",{
+            scrollTrigger:{
+               scrub:0.5,
+            },
+               x: 1500,
+               y: 500,
+         } 
+         )
+
+         gsap.from("#wolf",{
+            scrollTrigger:{
+               scrub:0.5,
+            },
+               x: 400,
+               
+         } 
+         )
+
+         gsap.to("#castle",{
+            scrollTrigger:{
+               scrub:0.5,
+            },
+               x: 200,
+               
+         } 
+         )
+
+         gsap.to("#bats",{
+            scrollTrigger:{
+               scrub:1.5,
+            },
+            scale:0.5,
+         } 
+         )
+         
+
+      </script>
+
+
+
+
+
+    </body>
+
+
+
+
+    
