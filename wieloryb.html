@@ -32,8 +32,8 @@
     }
 
     #message {
-      margin-top: 20px;
-      font-size: 24px;
+      margin-top: 10px;
+      font-size: 22px;
     }
 
     #restart-btn {
@@ -53,25 +53,36 @@
     #restart-btn:hover {
       background-color: #555;
     }
+
+    #counter {
+      margin-top: 10px;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
   <button id="restart-btn">Restart</button>
   <h1>Gra: Złap wieloryba harpunem</h1>
   <p>Kliknij wieloryba, gdy się pojawi!</p>
+
   <div id="game-area">
     <img id="whale" src="ww.png" alt="Wieloryb" />
   </div>
+
   <div id="message"></div>
+  <div id="counter">Złapane: 0 | Chybione: 0</div>
 
   <script>
     const whale = document.getElementById("whale");
     const message = document.getElementById("message");
     const gameArea = document.getElementById("game-area");
     const restartBtn = document.getElementById("restart-btn");
+    const counterDisplay = document.getElementById("counter");
 
     let hideTimeout;
     let gameTimeout;
+    let caught = 0;
+    let missed = 0;
 
     // Zmiana obrazka po najechaniu
     whale.addEventListener("mouseover", () => {
@@ -81,6 +92,10 @@
     whale.addEventListener("mouseout", () => {
       whale.src = "ww.png";
     });
+
+    function updateCounter() {
+      counterDisplay.textContent = `Złapane: ${caught} | Chybione: ${missed}`;
+    }
 
     function startGame() {
       whale.style.display = "none";
@@ -97,18 +112,24 @@
 
         whale.style.left = `${x}px`;
         whale.style.top = `${y}px`;
-        whale.src = "ww.png"; // reset obrazka
+        whale.src = "ww.png";
         whale.style.display = "block";
 
         hideTimeout = setTimeout(() => {
           whale.style.display = "none";
           message.textContent = "Nie udało się złapać!";
+          missed++;
+          updateCounter();
+          startGame(); // automatycznie zaczyna kolejną rundę
         }, 500);
 
         whale.onclick = () => {
           clearTimeout(hideTimeout);
           whale.style.display = "none";
           message.textContent = "Złapałeś wieloryba! Brawo!";
+          caught++;
+          updateCounter();
+          startGame(); // automatycznie zaczyna kolejną rundę
         };
       }, appearTime);
     }
@@ -116,6 +137,10 @@
     restartBtn.onclick = () => {
       clearTimeout(hideTimeout);
       clearTimeout(gameTimeout);
+      caught = 0;
+      missed = 0;
+      updateCounter();
+      message.textContent = "";
       startGame();
     };
 
