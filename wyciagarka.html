@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Gra</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    #countdown, #success, #press-e, #progress-container, #circle-container, #restart {
+      display: none;
+    }
+    #progress {
+      width: 300px;
+      height: 20px;
+      background-color: #444;
+      margin-top: 10px;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: limegreen;
+    }
+    #circle-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      border: 5px solid #555;
+      border-radius: 50%;
+      margin-top: 20px;
+    }
+    #indicator {
+      position: absolute;
+      width: 4px;
+      height: 100px;
+      background-color: red;
+      top: 0;
+      left: 50%;
+      transform-origin: bottom center;
+    }
+    #target {
+      position: absolute;
+      width: 10px;
+      height: 100px;
+      background-color: yellow;
+      top: 0;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: rotate(90deg);
+      opacity: 0.6;
+    }
+    #restart {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown">5</div>
+  <div id="press-e">Naciskaj "E"!</div>
+  <div id="progress-container">
+    <div id="progress">
+      <div id="progress-bar"></div>
+    </div>
+  </div>
+  <div id="circle-container">
+    <div id="target"></div>
+    <div id="indicator"></div>
+  </div>
+  <div id="success">Udało się! Wygrałeś!</div>
+  <button id="restart">Zagraj ponownie</button>
+
+  <script>
+    let stage = 0;
+    let progress = 0;
+    let countdownEl = document.getElementById("countdown");
+    let pressEEl = document.getElementById("press-e");
+    let progressContainer = document.getElementById("progress-container");
+    let progressBar = document.getElementById("progress-bar");
+    let circleContainer = document.getElementById("circle-container");
+    let indicator = document.getElementById("indicator");
+    let target = document.getElementById("target");
+    let successEl = document.getElementById("success");
+    let restartBtn = document.getElementById("restart");
+
+    let angle = 0;
+    let indicatorInterval;
+    let targetAngle;
+
+    function startCountdown() {
+      hideAll();
+      countdownEl.style.display = "block";
+      let count = 5;
+      countdownEl.textContent = count;
+      let countdown = setInterval(() => {
+        count--;
+        countdownEl.textContent = count;
+        if (count === 0) {
+          clearInterval(countdown);
+          countdownEl.style.display = "none";
+          startStage1();
+        }
+      }, 1000);
+    }
+
+    function startStage1() {
+      stage = 1;
+      pressEEl.style.display = "block";
+      progressContainer.style.display = "block";
+      progress = 0;
+      progressBar.style.width = "0%";
+    }
+
+    function startCircleStage() {
+      pressEEl.style.display = "none";
+      progressContainer.style.display = "none";
+      circleContainer.style.display = "block";
+
+      angle = 0;
+      targetAngle = Math.floor(Math.random() * 360);
+      target.style.transform = `rotate(${targetAngle}deg)`;
+
+      indicatorInterval = setInterval(() => {
+        angle = (angle + 5) % 360; // Przyspieszony ruch
+        indicator.style.transform = `rotate(${angle}deg)`;
+      }, 16);
+    }
+
+    function checkTiming() {
+      let diff = Math.abs(angle - targetAngle);
+      if (diff <= 10 || diff >= 350) {
+        clearInterval(indicatorInterval);
+        circleContainer.style.display = "none";
+        stage++;
+        if (stage > 4) {
+          successEl.style.display = "block";
+          restartBtn.style.display = "inline-block";
+        } else {
+          setTimeout(startCircleStage, 800);
+        }
+      }
+    }
+
+    function hideAll() {
+      countdownEl.style.display = "none";
+      pressEEl.style.display = "none";
+      progressContainer.style.display = "none";
+      circleContainer.style.display = "none";
+      successEl.style.display = "none";
+      restartBtn.style.display = "none";
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key.toLowerCase() === "e") {
+        if (stage === 1) {
+          progress += 5;
+          if (progress > 100) progress = 100;
+          progressBar.style.width = progress + "%";
+          if (progress >= 100) {
+            stage++;
+            setTimeout(startCircleStage, 500);
+          }
+        } else if (stage >= 2 && stage <= 4) {
+          checkTiming();
+        }
+      }
+    });
+
+    restartBtn.addEventListener("click", () => {
+      stage = 0;
+      startCountdown();
+    });
+
+    startCountdown();
+  </script>
+</body>
+</html>
